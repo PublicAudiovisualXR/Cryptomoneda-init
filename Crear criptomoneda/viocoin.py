@@ -110,6 +110,9 @@ app = Flask(__name__)
 # Si se obtiene un error 500, actualizar flask, reiniciar spyder y ejecutar la siguiente linea
 #app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
+# Crear la dirección del nodo en el puerto 5000
+node_address = str(uuid4()).replace('-', '')
+
 # Crear una blockchain
 blockchain = Blockchain()
 
@@ -120,12 +123,14 @@ def mine_block():
     previous_proof = previous_block['proof']
     proof = blockchain.proof_of_work(previous_proof)
     previous_hash = blockchain.hash(previous_block)
+    blockchain.add_transaction(sender = node_address, receiver = "Jordi Martos", amount = 10)
     block = blockchain.create_block(proof, previous_hash)
     response = {'message' : '¡Enhorabuena, has minando un nuevo bloque!',
                 'index' : block['index'],
                 'timestamp' : block['timestamp'],
                 'proof' : block['proof'],
-                'previous_hash' : block['previous_hash']}
+                'previous_hash' : block['previous_hash'],
+                'transactions' : block['transactions']}
     return jsonify(response), 200
 
 # Obtener la cadena de bloques al completo
