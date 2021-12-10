@@ -18,6 +18,8 @@ import hashlib
 import json
 from flask import Flask, jsonify
 import requests
+from uuid import uuid4
+from urllib.parse import urlparse
 
 
 # Parte 1 - Crear la cadena de bloques
@@ -110,6 +112,9 @@ def is_valid():
     else:
         response = {'message' : 'Ohhhhh, tenemos un problema. La cadena de bloques no es válida.'}
     return jsonify(response), 200  
+
+# Parte 3 - Descentralizar la cadena de bloques
+
 
 # Ejecutar la app
 app.run(host = '0.0.0.0', port = 5000)
