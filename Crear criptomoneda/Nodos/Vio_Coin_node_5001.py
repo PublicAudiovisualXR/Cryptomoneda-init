@@ -108,7 +108,7 @@ class Blockchain:
 # Crear aplición web
 app = Flask(__name__)
 # Si se obtiene un error 500, actualizar flask, reiniciar spyder y ejecutar la siguiente linea
-#app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # Crear la dirección del nodo en el puerto 5000
 node_address = str(uuid4()).replace('-', '')
@@ -166,7 +166,7 @@ def add_transaction():
 # Conectar nuevos nodos
 @app.route('/connect_node', methods = ['POST'])
 def connect_node():
-    json = request.get_json()
+    json = requests.get_json()
     nodes = json.get('nodes')
     if nodes is None:
         return 'No hay nodos para añadir', 400
