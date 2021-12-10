@@ -163,6 +163,19 @@ def add_transaction():
 
 # Parte 3 - Descentralizar la cadena de bloques
 
+# Conectar nuevos nodos
+@app.route('/connect_node', methods = ['POST'])
+def connect_node():
+    json = response.get_json()
+    nodes = json.get('nodes')
+    if nodes is None:
+        return 'No hay nodos para añadir', 400
+    for node in nodes:
+        blockchain.add_node(node)
+    response = {'message' : 'Todos los nodos han sido conectados. La cadena de VioCoins contiene ahora los nodos siguientes'
+                'total_nodes': list(blockchain.nodes)}
+    return jsonify(response), 201
+
 
 # Ejecutar la app
 app.run(host = '0.0.0.0', port = 5000)
