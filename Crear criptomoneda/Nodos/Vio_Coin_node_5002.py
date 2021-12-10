@@ -35,7 +35,7 @@ class Blockchain:
         block = {'index' : len(self.chain)+1,
                  'timestamp' : str(datetime.datetime.now()),
                  'proof' : proof,
-                 'previous_hash' : previous_hash
+                 'previous_hash' : previous_hash,
                  'transactions': self.transactions}
         self.transactions = []
         self.chain.append(block)
@@ -97,7 +97,7 @@ class Blockchain:
                 chain = response.json()['chain']
                 if length > max_length and self.is_chain_valid(chain):
                     max_length = length
-                    longest_chain() = chain
+                    longest_chain = chain
         if longest_chain: 
             self.chain = longest_chain()
             return True
@@ -166,13 +166,13 @@ def add_transaction():
 # Conectar nuevos nodos
 @app.route('/connect_node', methods = ['POST'])
 def connect_node():
-    json = response.get_json()
+    json = request.get_json()
     nodes = json.get('nodes')
     if nodes is None:
         return 'No hay nodos para añadir', 400
     for node in nodes:
         blockchain.add_node(node)
-    response = {'message' : 'Todos los nodos han sido conectados. La cadena de VioCoins contiene ahora los nodos siguientes'
+    response = {'message' : 'Todos los nodos han sido conectados. La cadena de VioCoins contiene ahora los nodos siguientes',
                 'total_nodes': list(blockchain.nodes)}
     return jsonify(response), 201
 
