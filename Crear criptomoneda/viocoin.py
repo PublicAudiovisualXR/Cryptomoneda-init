@@ -150,6 +150,17 @@ def is_valid():
         response = {'message' : 'Ohhhhh, tenemos un problema. La cadena de bloques no es válida.'}
     return jsonify(response), 200  
 
+# Añadir una nueva transacción a la cadena de bloques
+@app.route('/add_transaction', methods = ['POST'])
+def add_transaction():
+    json = requests.get_json()
+    transaction_keys = ['sender', 'receiver', 'amount']
+    if not all(key in json for key in transaction_keys):
+        return 'Faltan algunos elementos de la transacción', 400
+    index = blockchain.add_transaction(json['sender'], json['receiver'], json['amount'])
+    response = {'message':f'La transacción será añadida al bloque{index}'}
+    return jsonify(response), 201
+
 # Parte 3 - Descentralizar la cadena de bloques
 
 
