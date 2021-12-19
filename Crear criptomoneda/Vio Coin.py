@@ -79,7 +79,7 @@ class Blockchain:
         self.transactions.append({'sender': sender,
                                   'receiver' : receiver,
                                   'amount' : amount})
-        previous_block = self.previous_block()
+        previous_block = self.get_previous_block()
         return previous_block['index'] + 1
     
     def add_node(self, address):
